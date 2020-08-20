@@ -1,4 +1,4 @@
-package screens;
+package com.revature.screens;
 
 public class UserProfileScreen extends Screen{
 

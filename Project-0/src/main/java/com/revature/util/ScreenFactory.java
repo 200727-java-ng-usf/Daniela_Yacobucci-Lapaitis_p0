@@ -1,6 +1,7 @@
-package util;
+package com.revature.util;
 
-import screens.*;
+import com.revature.exceptions.ScreenNotFoundException;
+import com.revature.screens.*;
 
 public class ScreenFactory {
 
@@ -10,10 +11,10 @@ public class ScreenFactory {
             case ("HomeScreen"):
                 return HomeScreen.getInstance();
             case ("LoginScreen"):
-               // return LoginScreen.getInstance();
+                return LoginScreen.getInstance();
             case ("RegisterScreen"):
                // return new RegisterScreen();
-            default: return HomeScreen.getInstance();
+            default: throw new ScreenNotFoundException("Screen requested not found");
             //TODO change cases when all screens become singletons
         }
 

@@ -1,4 +1,4 @@
-package screens;
+package com.revature.screens;
 
 public class HomeScreen extends Screen{
 
@@ -12,7 +12,7 @@ public class HomeScreen extends Screen{
     //make static
     public static HomeScreen getInstance(){
 
-        return(homeScreenObj!=null? homeScreenObj = new HomeScreen():homeScreenObj);
+        return(homeScreenObj==null? homeScreenObj = new HomeScreen(): homeScreenObj);
     }
 
 /*    @Override
