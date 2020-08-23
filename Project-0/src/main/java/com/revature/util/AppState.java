@@ -27,7 +27,8 @@ public class AppState {
         router = new ScreenRouter();
         router.addScreen(HomeScreen.getInstance(userService))
                 .addScreen(RegisterScreen.getInstance(userService))
-                .addScreen(LoginScreen.getInstance(userService));
+                .addScreen(LoginScreen.getInstance(userService))
+                .addScreen(HomeScreen.getInstance(userService));
 
         System.out.println("[LOG] - Application initialization complete.");
 

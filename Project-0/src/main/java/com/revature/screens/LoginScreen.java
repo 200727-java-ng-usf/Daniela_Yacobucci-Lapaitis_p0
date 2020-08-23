@@ -25,5 +25,6 @@ public class LoginScreen extends Screen{
     @Override
     public void render() {
 
+        System.out.println("Login screen rendered");
     }
 }

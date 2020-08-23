@@ -12,6 +12,8 @@ public class ScreenRouter {
     public ScreenRouter addScreen(Screen screen) {
         //TODO remove breadcrumb
         System.out.println("[LOG] - Loading" + screen.getName());
+        // adding screen into HashSet
+        screens.add(screen);
         return this;
     }
 
@@ -19,7 +21,7 @@ public class ScreenRouter {
         screens.stream()
                 .filter(screen -> screen.getRoute().equals(route))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("No screen found with that route."))
+                .orElseThrow(() -> new RuntimeException("No screen found with " + route +" route."))
                 .render();
     }
 }

@@ -33,7 +33,7 @@ public class HomeScreen extends Screen{
     @Override
     public void render() {
 
-        System.out.println("Welcome to out Banking application!"
+        System.out.println("Welcome to our Banking application!"
                 + " Please select one of the following options by typing the numbers indicated");
         System.out.println("1. Login \n" +
                            "2. Register\n" +
@@ -45,8 +45,14 @@ public class HomeScreen extends Screen{
 
             switch(userSelection){
                 case "1" : app.getRouter().navigate("/login");
-                case "2" : app.getRouter().navigate("/Register");
+                break;
+
+                case "2" : app.getRouter().navigate("/register");
+                break;
+
                 case "3" : app.setAppRunning(false);
+                break;
+
                 default:
                     System.err.println("Invalid selection! Make sure you are typing" +
                                        " the appropriate number");
