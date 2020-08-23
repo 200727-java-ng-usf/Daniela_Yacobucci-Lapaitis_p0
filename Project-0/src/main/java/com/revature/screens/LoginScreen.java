@@ -1,30 +1,26 @@
 package com.revature.screens;
 
-import sun.rmi.runtime.Log;
+import com.revature.services.UserService;
 
 public class LoginScreen extends Screen{
 
-    //private
-    //static <^ reference
-    //public getInstance
-    //override clone
+    private UserService userService;
 
     private static LoginScreen loginScreenObj;
 
-    private LoginScreen(){
-        super();
+    private LoginScreen(UserService userService){
+        super("LoginScreen", "/login");
     }
 
-    public static LoginScreen getInstance(){
+    public static LoginScreen getInstance(UserService userService){
 
-
-        return(loginScreenObj == null ? (loginScreenObj = new LoginScreen()) : loginScreenObj);
+        return(loginScreenObj == null ? (loginScreenObj = new LoginScreen(userService)) : loginScreenObj);
     }
 
-//    @Override
-//    protected Object clone() throws CloneNotSupportedException(){
-//        throw new CloneNotSupportedException();
-//    }
+    @Override
+    protected Object clone() throws CloneNotSupportedException{
+        throw new CloneNotSupportedException();
+    }
 
     @Override
     public void render() {

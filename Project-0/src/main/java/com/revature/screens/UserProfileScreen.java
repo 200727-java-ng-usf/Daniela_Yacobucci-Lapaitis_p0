@@ -1,9 +1,5 @@
 package com.revature.screens;
 
-public class UserProfileScreen extends Screen{
+public class UserProfileScreen{
 
-    @Override
-    public void render() {
-
-    }
 }
