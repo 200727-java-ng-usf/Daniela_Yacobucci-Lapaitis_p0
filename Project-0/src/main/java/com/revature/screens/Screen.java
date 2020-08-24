@@ -1,5 +1,7 @@
 package com.revature.screens;
 
+import com.revature.services.UserService;
+
 public abstract class Screen {
 
     private String name;
@@ -22,5 +24,9 @@ public abstract class Screen {
      * Displays a particular menu depending on the screen implementation.
      */
     public abstract void render();
+
+    protected Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
 
 }

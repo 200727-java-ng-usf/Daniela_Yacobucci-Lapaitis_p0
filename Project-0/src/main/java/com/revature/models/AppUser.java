@@ -12,9 +12,17 @@ public class AppUser {
     private Role role;
 
     // TODO include check for middle name where necesary
-    //without role and middle name
-    public AppUser(Integer id, String firstName, String lastName,
+
+    public AppUser() {
+        super();
+        System.out.println("[LOG] - Created user object");
+        // TODO remove breadcrumb
+    }
+    //without role, middle name, and id
+    public AppUser(String firstName, String lastName,
                    String username, String password, String email) {
+        System.out.println("[LOG] - Created user object");
+        // TODO remove breadcrumb
         this.id = id;
         this.firstName = firstName;
         this.middleName = null;
@@ -25,31 +33,32 @@ public class AppUser {
         this.role = Role.LOCKED;
     }
 
-    // without middle name
-    public AppUser(Integer id, String firstName, String lastName,
+    // without middle name, and id
+    public AppUser(String firstName, String lastName,
                    String username, String password, String email, Role role) {
-        this.id = id;
-        this.firstName = firstName;
-        this.middleName = null;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
-        this.email = email;
+        this(firstName, lastName, username, password, email);
         this.role = role;
     }
 
-    //without role
-    public AppUser(Integer id, String firstName, String middleName,
+    //without role and id
+    public AppUser(String firstName, String middleName,
                    String lastName, String username, String password, String email) {
-        this(id, firstName, lastName, username, password, email);
+        this(firstName, lastName, username, password, email);
         this.middleName = middleName;
         this.role = Role.LOCKED;
+    }
+
+    // without id
+    public AppUser(String firstName, String middleName, String lastName,
+                   String username, String password, String email, Role role) {
+        this(firstName, lastName, username, password, email, role);
+        this.middleName = middleName;
     }
 
     // everything
     public AppUser(Integer id, String firstName, String middleName, String lastName,
                    String username, String password, String email, Role role) {
-        this(id, firstName, lastName, username, password, email, role);
+        this(firstName, lastName, username, password, email, role);
         this.middleName = middleName;
     }
 

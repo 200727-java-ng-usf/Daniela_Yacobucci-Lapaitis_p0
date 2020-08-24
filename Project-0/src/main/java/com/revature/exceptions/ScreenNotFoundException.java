@@ -6,4 +6,5 @@ public class ScreenNotFoundException extends RuntimeException {
         super(message);
     }
     // TODO maybe determine message somewhere else specific
+    // TODO put this exception in router
 }

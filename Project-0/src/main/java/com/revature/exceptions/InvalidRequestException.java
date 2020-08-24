@@ -1,4 +1,9 @@
 package com.revature.exceptions;
 
-public class InvalidRequestException {
+public class InvalidRequestException extends RuntimeException {
+
+    public InvalidRequestException(String message) {
+        super(message);
+    }
+
 }
