@@ -64,7 +64,7 @@ public class UserService {
 
         // validate that the provided username and password are not empty values
 
-        try {
+
             if (username == null || username.trim().equals("") || password == null || password.trim().equals("")) {
                 throw new InvalidRequestException("Invalid credential values provided!");
             }
@@ -75,9 +75,7 @@ public class UserService {
             app.setCurrentUser(authUser);
             app.setCurrentUserAccounts(app.getAccountService().getAccountsOfCurrentUsers(authUser));
             
-        } catch (InvalidRequestException | AuthenticationException ire) {
-            System.err.println("Invalid login credentials provided!");
-        }
+
 
 
         //TODO figure out which layer does exception handling

@@ -40,8 +40,7 @@ public class AppState {
                 .addScreen(HomeScreen.getInstance(userService))
                 .addScreen(DashboardScreen.getInstance(userService))
                 .addScreen(DepositScreen.getInstance(accountService))
-                //.addScreen(WithdrawScreen.getInstance(accountService))
-                ;
+                .addScreen(WithdrawScreen.getInstance(accountService));
 
         System.out.println("[LOG] - Application initialization complete.");
 

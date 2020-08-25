@@ -55,8 +55,8 @@ public class HomeScreen extends Screen{
                 break;
 
                 default:
-                    System.err.println("Invalid selection! Make sure you are typing" +
-                                       " the appropriate number");
+                    System.out.println("\nInvalid selection. Make sure you are typing" +
+                                       " the appropriate number\n");
 
             }
         } catch (IOException e) {

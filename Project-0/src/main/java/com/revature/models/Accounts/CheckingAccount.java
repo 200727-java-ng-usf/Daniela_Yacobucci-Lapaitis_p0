@@ -50,7 +50,7 @@ public class CheckingAccount implements Account {
     public String toString() {
         return "CheckingAccount{" +
                 "accountNumber=" + accountNumber +
-                ", balance=" + balance +
+                ", balance= $" + balance +
                 '}';
     }
 }

@@ -38,7 +38,7 @@ public class DashboardScreen extends Screen{
     @Override
     public void render(){
 
-        while(app.getCurrentUser()!=null) {
+        while(app.isSessionValid()) {
 
             String userSelection;
 
@@ -62,7 +62,7 @@ public class DashboardScreen extends Screen{
                         app.getRouter().navigate("/deposit");
                         break;
                     case "2":
-                        System.err.println("WithdrawScreen under construction...");
+                        app.getRouter().navigate("/withdraw");
                         break;
                     case "3":
                         AccountService.logOut();

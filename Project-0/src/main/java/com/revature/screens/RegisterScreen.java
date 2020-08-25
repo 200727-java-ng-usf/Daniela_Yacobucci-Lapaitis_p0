@@ -83,7 +83,7 @@ public class RegisterScreen extends Screen {
             }
 
         } catch (InvalidRequestException e) {
-        System.err.println("Registration unsuccessful, invalid values provided.");
+        System.out.println("\nRegistration unsuccessful, invalid values provided.\n");
 
         } catch (Exception e) {
         System.err.println("[ERROR] - An unexpected exception occurred: " + e.getMessage());

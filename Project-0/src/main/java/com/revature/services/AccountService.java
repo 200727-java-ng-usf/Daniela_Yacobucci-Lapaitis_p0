@@ -4,11 +4,11 @@ import com.revature.models.Accounts.Account;
 import com.revature.models.Accounts.CheckingAccount;
 import com.revature.models.AppUser;
 
+import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Optional;
 import com.revature.repos.AccountRepository;
-import sun.jvm.hotspot.debugger.win32.coff.DebugVC50SSSrcLnSeg;
 
 import static com.revature.AppDriver.app;
 
@@ -16,19 +16,12 @@ public class AccountService {
 
     private AccountRepository accountRepo;
 
+
     public AccountService(AccountRepository accountRepo){
         System.out.println("[LOG] - Instantiating " + this.getClass().getName());
         this.accountRepo = accountRepo;
     }
 
-
-
-    public void withdraw (double amount) {
-        // if negative
-        //throw exception??
-        //else, withdraw
-        //maybe do constraints??
-    }
 
     public HashSet<Account> getAccountsOfCurrentUsers(AppUser appUser) {
 
@@ -50,18 +43,58 @@ public class AccountService {
         HashSet<Account> Accounts = new HashSet<Account>();
 
 
-        if (amount > 0){
+        if (isAmountPositive(amount)){
             //obtains the first account object of the user
             Accounts = this.getAccountsOfCurrentUsers(appUser);
             Iterator itr = Accounts.iterator();
             CheckingAccount temp = (CheckingAccount) itr.next();
 
-    } else {
-            System.err.println("Incorrect deposit amount.");
-            // TODO handle this
-        }
-        // TODO make sure that withdrawals dont go overboard
+            double newBalance = temp.getBalance() + amount;
+            temp.setBalance(newBalance);
+            accountRepo.updateBalanceInDatabase(newBalance, temp.getAccountNumber());
 
+            System.out.println("\nAmount successfully deposited.\n");
+
+            }
+
+
+    }
+
+    public void withdrawFromAccount (double amount, AppUser appUser) {
+        HashSet<Account> Accounts = new HashSet<Account>();
+
+        //obtains the first account object of the user
+        Accounts = this.getAccountsOfCurrentUsers(appUser);
+        Iterator itr = Accounts.iterator();
+        CheckingAccount temp = (CheckingAccount) itr.next();
+
+
+        if (isAmountPositive(amount)&&accountHasSufficientFounds(amount,temp.getBalance())){
+            double newBalance = temp.getBalance() - amount;
+            temp.setBalance(newBalance);
+            accountRepo.updateBalanceInDatabase(newBalance, temp.getAccountNumber());
+
+            System.out.println("\nAmount successfully withdrawn.\n");
+        }
+
+    }
+
+    private static boolean accountHasSufficientFounds(double amountToDeposit, double founds){
+
+        if(amountToDeposit>founds){
+            System.out.println("\nAccount does not have sufficient founds.\n");
+            return false;
+        }
+        return true;
+
+    }
+
+    private static boolean isAmountPositive(double amount){
+        if (amount > 0){
+            return true;
+        }
+            System.out.println("Incorrect withdrawal amount.");
+            return false;
     }
 
     public void updateAccounts () {

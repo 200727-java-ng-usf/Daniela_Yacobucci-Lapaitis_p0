@@ -79,7 +79,7 @@ public class AccountRepository {
 
     }
 
-    public Optional<Account> updateBalance(double balance, int accountNumber) {
+    public Optional<Account> updateBalanceInDatabase(double balance, int accountNumber) {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
             // TODO have to update balance to add

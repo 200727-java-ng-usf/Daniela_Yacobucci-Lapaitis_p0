@@ -1,10 +1,9 @@
 package com.revature.screens;
 
+import com.revature.exceptions.AuthenticationException;
 import com.revature.exceptions.InvalidRequestException;
 import com.revature.repos.UserRepository;
 import com.revature.services.UserService;
-
-import javax.security.sasl.AuthenticationException;
 
 import java.io.IOException;
 
@@ -63,7 +62,10 @@ public class LoginScreen extends Screen{
 
             }
 
-        }  catch (IOException e) {
+        } catch (InvalidRequestException | AuthenticationException ire) {
+        System.out.println("Invalid login credentials provided!\n");
+
+        }catch (Exception e) {
             e.printStackTrace();
             System.err.println("[ERROR] - An unexpected exception occurred: " + e.getMessage());
             System.out.println("[LOG] - Shutting down application");
