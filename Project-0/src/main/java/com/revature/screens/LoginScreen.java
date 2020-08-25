@@ -26,13 +26,13 @@ public class LoginScreen extends Screen{
             loginScreenObj = new LoginScreen(userService);
         }
 
-        loginScreenObj.mapUserservice(userService);
+        loginScreenObj.mapUserService(userService);
 
         return(loginScreenObj);
 
     }
 
-    public void mapUserservice(UserService userService){
+    public void mapUserService(UserService userService){
         this.userService = userService;
     }
 
@@ -43,6 +43,8 @@ public class LoginScreen extends Screen{
 
     @Override
     public void render() {
+
+
 
         String username, password;
 

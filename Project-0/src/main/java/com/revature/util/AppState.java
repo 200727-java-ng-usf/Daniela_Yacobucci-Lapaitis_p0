@@ -10,6 +10,7 @@ import com.revature.services.UserService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.Set;
 
 public class AppState {
@@ -18,10 +19,13 @@ public class AppState {
     private AppUser currentUser;
     private ScreenRouter router;
     private boolean appRunning;
-    private Set<Account> currentUserAccounts;
+    private HashSet<Account> currentUserAccounts;
 
     final AccountRepository accountRepo = new AccountRepository();
     final AccountService accountService = new AccountService(accountRepo);
+
+    final UserRepository userRepo = new UserRepository();
+    final UserService userService = new UserService(userRepo);
 
     public AppState() {
         System.out.println("[LOG] - Initializing application...");
@@ -29,18 +33,15 @@ public class AppState {
         appRunning = true;
         console = new BufferedReader(new InputStreamReader(System.in));
 
-        final UserRepository userRepo = new UserRepository();
-
-
-        final UserService userService = new UserService(userRepo);
-
-
         router = new ScreenRouter();
         router.addScreen(HomeScreen.getInstance(userService))
                 .addScreen(RegisterScreen.getInstance(userService))
                 .addScreen(LoginScreen.getInstance(userService))
                 .addScreen(HomeScreen.getInstance(userService))
-                .addScreen(DashboardScreen.getInstance(userService));
+                .addScreen(DashboardScreen.getInstance(userService))
+                .addScreen(DepositScreen.getInstance(accountService))
+                //.addScreen(WithdrawScreen.getInstance(accountService))
+                ;
 
         System.out.println("[LOG] - Application initialization complete.");
 
@@ -58,11 +59,11 @@ public class AppState {
         this.currentUser = currentUser;
     }
 
-    public Set<Account> getCurrentUserAccounts() {
+    public HashSet<Account> getCurrentUserAccounts() {
         return currentUserAccounts;
     }
 
-    public void setCurrentUserAccounts(Set<Account> currentUserAccounts) {
+    public void setCurrentUserAccounts(HashSet<Account> currentUserAccounts) {
         this.currentUserAccounts = currentUserAccounts;
     }
 

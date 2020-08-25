@@ -1,18 +1,17 @@
 package com.revature.models.Accounts;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class CheckingAccount implements Account {
 
     private int accountNumber;
     // TODO change from int to long
-    private BigDecimal balance;
+    private double balance;
 
     public CheckingAccount () {
 
     }
-    public CheckingAccount(int accountNumber, BigDecimal balance) {
+    public CheckingAccount(int accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
     }
@@ -25,11 +24,11 @@ public class CheckingAccount implements Account {
         this.accountNumber = accountNumber;
     }
 
-    public BigDecimal getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 

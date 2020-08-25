@@ -1,5 +1,6 @@
 package com.revature.screens;
 
+import com.revature.services.AccountService;
 import com.revature.services.UserService;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ public class DashboardScreen extends Screen{
     private static DashboardScreen dashboardScreenObj;
 
     private UserService userService;
+
 
     private DashboardScreen(UserService userService) {
         super("DashboardScreen", "/dashboard");
@@ -29,7 +31,6 @@ public class DashboardScreen extends Screen{
         return(dashboardScreenObj);
     }
 
-    @Override
     public void mapUserservice(UserService userService) {
         this.userService = userService;
     }
@@ -37,43 +38,47 @@ public class DashboardScreen extends Screen{
     @Override
     public void render(){
 
-        String userSelection;
-        System.out.println("[LOG] - loaded render method in " + getClass());
+        while(app.getCurrentUser()!=null) {
 
-        System.out.println("\nWelcome " + app.getCurrentUser().getFirstName() + "!");
-        System.out.println("Please select one of the following options\n");
-        System.out.println("1) Deposit founds");
-        System.out.println("2) Withdraw founds");
-        System.out.println("3) View balance");
+            String userSelection;
 
-        System.out.println("The following are your accounts and their balances");
+            System.out.println("\nWelcome " + app.getCurrentUser().getFirstName() + "!");
+            System.out.println("Please select one of the following options\n");
+            System.out.println("1) Deposit founds");
+            System.out.println("2) Withdraw founds");
+            System.out.println("3) Log out");
 
-        System.out.println(app.getCurrentUserAccounts().toString());
+            System.out.println("\nThe following are your accounts and their balances");
 
-        try {
-            userSelection = app.getConsole().readLine();
+            app.getAccountService().updateAccounts();
 
-            switch (userSelection) {
-                case "1":
-                    app.getRouter().navigate("DepositScreen under construction...");
-                    break;
-                case "2":
-                    System.err.println("WithdrawScreen under construction...");
-                    break;
-                case "3":
-                    System.err.println("ViewScreen under construction...");
-                    break;
-                default:
-                    System.out.println("Invalid Selection!");
+            System.out.println(app.getCurrentUserAccounts().toString());
+
+            try {
+                userSelection = app.getConsole().readLine();
+
+                switch (userSelection) {
+                    case "1":
+                        app.getRouter().navigate("/deposit");
+                        break;
+                    case "2":
+                        System.err.println("WithdrawScreen under construction...");
+                        break;
+                    case "3":
+                        AccountService.logOut();
+                        break;
+
+                    default:
+                        System.out.println("Invalid Selection!");
                 }
             } catch (IOException ioe) {
-            System.err.println("[ERROR] - " + ioe.getMessage());
-            System.out.println("[LOG] - Shutting down application");
-            app.setAppRunning(false);
-            //TODO maybe get rid of this later
+                System.err.println("[ERROR] - " + ioe.getMessage());
+                System.out.println("[LOG] - Shutting down application");
+                app.setAppRunning(false);
+                //TODO maybe get rid of this later
+            }
+
         }
-
-
 
     }
 

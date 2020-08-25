@@ -16,8 +16,6 @@ import static com.revature.AppDriver.app;
 
 public class AccountRepository {
 
-        private String baseQuery = "SELECT * FROM project_0.accounts ";
-
         public AccountRepository(){
             System.out.println("[LOG] - Instantiating " + this.getClass().getName());
         }
@@ -58,7 +56,7 @@ public class AccountRepository {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-            String sql = baseQuery + "WHERE account_number = ?";
+            String sql = "SELECT * FROM project_0.accounts WHERE account_number = ?";
             PreparedStatement pstmt;
 
             ResultSet rs;
@@ -81,6 +79,30 @@ public class AccountRepository {
 
     }
 
+    public Optional<Account> updateBalance(double balance, int accountNumber) {
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            // TODO have to update balance to add
+            // TODO display correct amount
+
+            String sql = "UPDATE project_0.accounts SET balance = ? WHERE account_number = ?";
+
+
+            // balance accountId
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setDouble(1, balance);
+            pstmt.setInt(2, accountNumber);
+            pstmt.executeUpdate();
+
+            app.getCurrentUserAccounts();
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+
+        return null;
+    }
+
     private Account mapResultSetOfAccount(ResultSet rs) throws SQLException {
 
         CheckingAccount temp = new CheckingAccount();
@@ -88,13 +110,15 @@ public class AccountRepository {
         while (rs.next()) {
 
             temp.setAccountNumber(rs.getInt("account_number"));
-            temp.setBalance(rs.getBigDecimal("balance"));
+            temp.setBalance(rs.getDouble("balance"));
         }
 
 
         return temp;
 
     }
+
+
 
     private HashSet<Integer> mapResultSetOfAccountNumbers(ResultSet rs) throws SQLException {
         HashSet<Integer> accountNumbers = new HashSet<>();
@@ -105,8 +129,6 @@ public class AccountRepository {
 
         return accountNumbers;
     }
-
-
 
 
 

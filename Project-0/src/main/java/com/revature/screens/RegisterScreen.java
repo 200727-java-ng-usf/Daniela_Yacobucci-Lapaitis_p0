@@ -15,7 +15,7 @@ import static com.revature.AppDriver.app;
 
 public class RegisterScreen extends Screen {
 
-    private static RegisterScreen RegisterScreenObj;
+    private static RegisterScreen registerScreenObj;
 
     private UserService userService;
 
@@ -27,7 +27,14 @@ public class RegisterScreen extends Screen {
 
     public static RegisterScreen getInstance(UserService userService){
 
-        return(RegisterScreenObj == null ? (RegisterScreenObj = new RegisterScreen(userService)) : RegisterScreenObj);
+        if(registerScreenObj == null){
+            registerScreenObj = new RegisterScreen(userService);
+        }
+
+        registerScreenObj.mapUserService(userService);
+
+        return(registerScreenObj);
+
     }
 
     @Override
@@ -35,9 +42,8 @@ public class RegisterScreen extends Screen {
         throw new CloneNotSupportedException();
     }
 
-    @Override
-    public void mapUserservice(UserService userService) {
-        // TODO implement
+    public void mapUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
