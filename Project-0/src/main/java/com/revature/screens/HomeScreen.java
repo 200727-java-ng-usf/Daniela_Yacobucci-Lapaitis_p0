@@ -31,13 +31,15 @@ public class HomeScreen extends Screen{
    }
 
     @Override
+    public void mapUserservice(UserService userService) {
+        // TODO implement
+    }
+
+    @Override
     public void render() {
 
-        System.out.println("Welcome to our Banking application!"
-                + " Please select one of the following options by typing the numbers indicated");
-        System.out.println("1. Login \n" +
-                           "2. Register\n" +
-                           "3. Exit\n");
+        System.out.println("Welcome to our Banking application. Please select one of the following options by typing the numbers indicated" +
+                           "\n\n1. Login \n2. Register\n3. Exit\n");
 
         try {
             System.out.print("> ");
@@ -56,7 +58,6 @@ public class HomeScreen extends Screen{
                 default:
                     System.err.println("Invalid selection! Make sure you are typing" +
                                        " the appropriate number");
-
 
             }
         } catch (IOException e) {

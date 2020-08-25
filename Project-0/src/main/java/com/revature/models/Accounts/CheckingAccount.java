@@ -1,30 +1,35 @@
 package com.revature.models.Accounts;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class CheckingAccount implements Account {
 
-    private long   accountNumber;
-    private double balance;
+    private int accountNumber;
+    // TODO change from int to long
+    private BigDecimal balance;
 
-    public CheckingAccount(long accountNumber, double balance) {
+    public CheckingAccount () {
+
+    }
+    public CheckingAccount(int accountNumber, BigDecimal balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
     }
 
-    public long getAccountNumber() {
+    public int getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(long accountNumber) {
+    public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -34,7 +39,7 @@ public class CheckingAccount implements Account {
         if (o == null || getClass() != o.getClass()) return false;
         CheckingAccount that = (CheckingAccount) o;
         return accountNumber == that.accountNumber &&
-                Double.compare(that.balance, balance) == 0;
+                Objects.equals(balance, that.balance);
     }
 
     @Override

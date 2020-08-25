@@ -1,12 +1,16 @@
 package com.revature.util;
 
+import com.revature.models.Accounts.Account;
 import com.revature.models.AppUser;
+import com.revature.repos.AccountRepository;
 import com.revature.repos.UserRepository;
 import com.revature.screens.*;
+import com.revature.services.AccountService;
 import com.revature.services.UserService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Set;
 
 public class AppState {
 
@@ -14,6 +18,10 @@ public class AppState {
     private AppUser currentUser;
     private ScreenRouter router;
     private boolean appRunning;
+    private Set<Account> currentUserAccounts;
+
+    final AccountRepository accountRepo = new AccountRepository();
+    final AccountService accountService = new AccountService(accountRepo);
 
     public AppState() {
         System.out.println("[LOG] - Initializing application...");
@@ -22,7 +30,10 @@ public class AppState {
         console = new BufferedReader(new InputStreamReader(System.in));
 
         final UserRepository userRepo = new UserRepository();
+
+
         final UserService userService = new UserService(userRepo);
+
 
         router = new ScreenRouter();
         router.addScreen(HomeScreen.getInstance(userService))
@@ -47,6 +58,18 @@ public class AppState {
         this.currentUser = currentUser;
     }
 
+    public Set<Account> getCurrentUserAccounts() {
+        return currentUserAccounts;
+    }
+
+    public void setCurrentUserAccounts(Set<Account> currentUserAccounts) {
+        this.currentUserAccounts = currentUserAccounts;
+    }
+
+    public AccountService getAccountService() {
+        return accountService;
+    }
+
     public ScreenRouter getRouter() {
         return router;
     }
@@ -66,5 +89,7 @@ public class AppState {
     public boolean isSessionValid() {
         return (this.currentUser != null);
     }
+
+
 }
 

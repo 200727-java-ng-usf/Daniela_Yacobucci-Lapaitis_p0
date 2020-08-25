@@ -36,6 +36,11 @@ public class RegisterScreen extends Screen {
     }
 
     @Override
+    public void mapUserservice(UserService userService) {
+        // TODO implement
+    }
+
+    @Override
     public void render() {
         String firstName, middleName, lastName, email, username, password;
         AppUser newUser;

@@ -8,7 +8,7 @@ import static com.revature.AppDriver.app;
 
 public class DashboardScreen extends Screen{
 
-    private static DashboardScreen DashboardScreenObj;
+    private static DashboardScreen dashboardScreenObj;
 
     private UserService userService;
 
@@ -18,8 +18,20 @@ public class DashboardScreen extends Screen{
         this.userService= userService;
     }
 
+
     public static Screen getInstance(UserService userService) {
-        return(DashboardScreenObj == null ? (DashboardScreenObj = new DashboardScreen(userService)) : DashboardScreenObj);
+        if(dashboardScreenObj == null){
+            dashboardScreenObj = new DashboardScreen(userService);
+        }
+
+        dashboardScreenObj.mapUserservice(userService);
+
+        return(dashboardScreenObj);
+    }
+
+    @Override
+    public void mapUserservice(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -35,6 +47,8 @@ public class DashboardScreen extends Screen{
         System.out.println("3) View balance");
 
         System.out.println("The following are your accounts and their balances");
+
+        System.out.println(app.getCurrentUserAccounts().toString());
 
         try {
             userSelection = app.getConsole().readLine();

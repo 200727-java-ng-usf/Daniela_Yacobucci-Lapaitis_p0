@@ -3,9 +3,11 @@ package com.revature.services;
 import com.revature.exceptions.AuthenticationException;
 import com.revature.exceptions.InvalidRequestException;
 import com.revature.exceptions.ResourcePersistenceException;
+import com.revature.models.Accounts.CheckingAccount;
 import com.revature.models.AppUser;
 import com.revature.models.Role;
 import com.revature.repos.UserRepository;
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
 import java.util.Optional;
 
@@ -43,7 +45,6 @@ public class UserService {
         newUser.setRole(Role.BASIC_USER);
         userRepo.save(newUser);
         System.out.println(newUser);
-        app.setCurrentUser(newUser);
 
     }
 
@@ -62,17 +63,25 @@ public class UserService {
     public void authenticate(String username, String password) {
 
         // validate that the provided username and password are not empty values
-        if (username == null || username.trim().equals("") || password == null || password.trim().equals("")) {
-            throw new InvalidRequestException("Invalid credential values provided!");
+
+        try {
+            if (username == null || username.trim().equals("") || password == null || password.trim().equals("")) {
+                throw new InvalidRequestException("Invalid credential values provided!");
+            }
+
+            AppUser authUser = userRepo.findUserByCredentials(username, password)
+                    .orElseThrow(AuthenticationException::new);
+
+            app.setCurrentUser(authUser);
+            app.setCurrentUserAccounts(app.getAccountService().getAccountsOfCurrentUsers(authUser));
+            
+        } catch (InvalidRequestException | AuthenticationException ire) {
+            System.err.println("Invalid login credentials provided!");
         }
 
 
-        AppUser authUser = userRepo.findUserByCredentials(username, password)
-                .orElseThrow(AuthenticationException::new);
-
+        //TODO figure out which layer does exception handling
         //TODO understand AuthenticationException::new and check why it was not working
-
-        app.setCurrentUser(authUser);
 
     }
 

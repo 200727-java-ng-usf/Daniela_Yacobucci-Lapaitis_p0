@@ -29,4 +29,6 @@ public abstract class Screen {
         throw new CloneNotSupportedException();
     }
 
+    public abstract void mapUserservice(UserService userService);
+
 }

@@ -1,5 +1,8 @@
 package com.revature.models;
 
+import com.revature.models.Accounts.Account;
+import com.revature.models.Accounts.CheckingAccount;
+
 public class AppUser {
 
     private Integer id;

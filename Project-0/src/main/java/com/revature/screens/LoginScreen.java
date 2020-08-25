@@ -6,6 +6,8 @@ import com.revature.services.UserService;
 
 import javax.security.sasl.AuthenticationException;
 
+import java.io.IOException;
+
 import static com.revature.AppDriver.app;
 
 public class LoginScreen extends Screen{
@@ -20,8 +22,18 @@ public class LoginScreen extends Screen{
 
     public static LoginScreen getInstance(UserService userService){
 
-        this.userService = userService;//TODO include this in all screens necesary
-        return(loginScreenObj == null ? (loginScreenObj = new LoginScreen(userService)) : loginScreenObj);
+        if(loginScreenObj == null){
+            loginScreenObj = new LoginScreen(userService);
+        }
+
+        loginScreenObj.mapUserservice(userService);
+
+        return(loginScreenObj);
+
+    }
+
+    public void mapUserservice(UserService userService){
+        this.userService = userService;
     }
 
     @Override
@@ -43,14 +55,13 @@ public class LoginScreen extends Screen{
 
             userService.authenticate(username, password);
 
-            if (app.isSessionValid()) {
+            if (app.isSessionValid() && app.getCurrentUser()!=null) {
 
                 app.getRouter().navigate("/dashboard");
+
             }
 
-        } catch (InvalidRequestException | AuthenticationException e) {
-            System.err.println("Invalid login credentials provided!");
-        } catch (Exception e) {
+        }  catch (IOException e) {
             e.printStackTrace();
             System.err.println("[ERROR] - An unexpected exception occurred: " + e.getMessage());
             System.out.println("[LOG] - Shutting down application");
