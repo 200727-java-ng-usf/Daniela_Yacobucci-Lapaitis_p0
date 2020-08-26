@@ -1,6 +1,7 @@
 package com.revature.screens;
 
 import com.revature.exceptions.InvalidRequestException;
+import com.revature.exceptions.ResourcePersistenceException;
 import com.revature.models.AppUser;
 import com.revature.services.UserService;
 import com.revature.util.ConnectionFactory;
@@ -21,10 +22,15 @@ public class RegisterScreen extends Screen {
 
     private RegisterScreen(UserService userService) {
         super("RegisterScreen", "/register");
-        System.out.println("[LOG] - Instantiating " + this.getClass().getName());
         this.userService= userService;
     }
 
+
+    /**
+     * Static getInstance method needed to follow singleton pattern
+     * @param userService
+     * @return Screen
+     */
     public static RegisterScreen getInstance(UserService userService){
 
         if(registerScreenObj == null){
@@ -37,11 +43,11 @@ public class RegisterScreen extends Screen {
 
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
-    }
-
+    /**
+     * Assignment method needed because it is not possible to place its logic
+     * in the Singleton Constructor
+     * @param userService
+     */
     public void mapUserService(UserService userService) {
         this.userService = userService;
     }
@@ -85,11 +91,15 @@ public class RegisterScreen extends Screen {
         } catch (InvalidRequestException e) {
         System.out.println("\nRegistration unsuccessful, invalid values provided.\n");
 
+        } catch (ResourcePersistenceException rpe) {
+            System.out.println("\nRegistration unsuccessful. Username or email already in use.\n");
+
         } catch (Exception e) {
-        System.err.println("[ERROR] - An unexpected exception occurred: " + e.getMessage());
-        System.out.println("[LOG] - Shutting down application");
-        app.setAppRunning(false);
-    }
+            System.err.println("[ERROR] - An unexpected exception occurred: " + e.getMessage());
+            app.setAppRunning(false);
+        }
+
+
 
 
     }

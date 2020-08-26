@@ -20,14 +20,11 @@ public class AppUser {
 
     public AppUser() {
         super();
-        System.out.println("[LOG] - Created user object");
-        // TODO remove breadcrumb
     }
     //without role, middle name, and id
     public AppUser(String firstName, String lastName,
                    String username, String password, String email) {
-        System.out.println("[LOG] - Created user object");
-        // TODO remove breadcrumb
+
         this.id = id;
         this.firstName = firstName;
         this.middleName = null;

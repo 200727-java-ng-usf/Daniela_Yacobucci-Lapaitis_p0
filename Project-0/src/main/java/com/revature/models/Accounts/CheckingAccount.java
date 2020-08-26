@@ -5,7 +5,6 @@ import java.util.Objects;
 public class CheckingAccount implements Account {
 
     private int accountNumber;
-    // TODO change from int to long
     private double balance;
 
     public CheckingAccount () {

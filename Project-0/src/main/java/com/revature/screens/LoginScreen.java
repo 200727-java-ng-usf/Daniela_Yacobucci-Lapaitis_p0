@@ -19,6 +19,12 @@ public class LoginScreen extends Screen{
         super("LoginScreen", "/login");
     }
 
+
+    /**
+     * Static getInstance method needed to follow singleton pattern
+     * @param userService
+     * @return Appropriate Screen implementation
+     */
     public static LoginScreen getInstance(UserService userService){
 
         if(loginScreenObj == null){
@@ -31,19 +37,18 @@ public class LoginScreen extends Screen{
 
     }
 
+    /**
+     * Assignment method needed because it is not possible to place its logic
+     * in the Singleton Constructor
+     * @param userService
+     */
     public void mapUserService(UserService userService){
         this.userService = userService;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException{
-        throw new CloneNotSupportedException();
-    }
 
     @Override
     public void render() {
-
-
 
         String username, password;
 
@@ -67,8 +72,7 @@ public class LoginScreen extends Screen{
 
         }catch (Exception e) {
             e.printStackTrace();
-            System.err.println("[ERROR] - An unexpected exception occurred: " + e.getMessage());
-            System.out.println("[LOG] - Shutting down application");
+            System.err.println("[ERROR] - An unexpected exception occurred: " + e.getMessage() + ". Shutting down application");
             app.setAppRunning(false);
         }
     }

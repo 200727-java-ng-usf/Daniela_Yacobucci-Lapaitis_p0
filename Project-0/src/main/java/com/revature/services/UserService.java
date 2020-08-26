@@ -18,7 +18,6 @@ public class UserService {
     private UserRepository userRepo;
 
     public UserService (UserRepository repo) {
-        System.out.println("[LOG] - Instantiating " + this.getClass().getName());
         userRepo = repo;
     }
 
@@ -26,6 +25,10 @@ public class UserService {
         return (middleName == null  ? false : true);
     }
 
+    /**
+     *
+     * @param newUser
+     */
     public void register(AppUser newUser) {
 
         if (!isUserValid(newUser)) {
@@ -42,12 +45,17 @@ public class UserService {
             throw new ResourcePersistenceException("Provided email is already in use!");
         }
 
-        newUser.setRole(Role.BASIC_USER);
-        userRepo.save(newUser);
-        System.out.println(newUser);
+            newUser.setRole(Role.BASIC_USER);
+            userRepo.save(newUser);
 
     }
 
+    /**
+     * Checks that none of the credentials provided are null or empty strings,
+     * except for the middle name since it is optional
+     * @param user
+     * @return
+     */
     public boolean isUserValid(AppUser user) {
         if (user == null) return false;
         if (user.getFirstName() == null || user.getFirstName().trim().equals("")) return false;
@@ -59,6 +67,13 @@ public class UserService {
     }
 
 
+    /**
+     * Validates that the provided username and password are not empty values and
+     * checks if a user with that username already axists. Once this passes
+     * it sets the current user and the current user accounts in the application
+     * @param username
+     * @param password
+     */
     public void authenticate(String username, String password) {
 
         // validate that the provided username and password are not empty values
@@ -73,12 +88,7 @@ public class UserService {
 
             app.setCurrentUser(authUser);
             app.setCurrentUserAccounts(app.getAccountService().getAccountsOfCurrentUsers(authUser));
-            
 
-
-
-        //TODO figure out which layer does exception handling
-        //TODO understand AuthenticationException::new and check why it was not working
 
     }
 

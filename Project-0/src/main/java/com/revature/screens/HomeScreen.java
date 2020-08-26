@@ -15,24 +15,20 @@ public class HomeScreen extends Screen{
 
     private HomeScreen(UserService userService){
         super("HomeScreen", "/home");
-        System.out.println("[LOG] - Instantiating " + super.getName());
-        // TODO remove breadcrumb
     }
 
-    //make static
+
+    /**
+     * Static getInstance method needed to follow singleton pattern
+     * @param userService
+     * @return Appropriate Screen implementation
+     */
     public static HomeScreen getInstance(UserService userService){
 
         return(homeScreenObj==null? homeScreenObj = new HomeScreen(userService): homeScreenObj);
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException{
-        throw new CloneNotSupportedException();
-   }
 
-    public void mapUserservice(UserService userService) {
-        // TODO implement
-    }
 
     @Override
     public void render() {

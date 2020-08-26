@@ -16,11 +16,14 @@ public class DashboardScreen extends Screen{
 
     private DashboardScreen(UserService userService) {
         super("DashboardScreen", "/dashboard");
-        System.out.println("[LOG] - Instantiating " + this.getClass().getName());
         this.userService= userService;
     }
 
-
+    /**
+     * Static getInstance method needed to follow singleton pattern
+     * @param userService
+     * @return Screen
+     */
     public static Screen getInstance(UserService userService) {
         if(dashboardScreenObj == null){
             dashboardScreenObj = new DashboardScreen(userService);
@@ -31,6 +34,11 @@ public class DashboardScreen extends Screen{
         return(dashboardScreenObj);
     }
 
+    /**
+     * Assignment method needed because it is not possible to place its logic
+     * in the Singleton Constructor
+     * @param userService
+     */
     public void mapUserservice(UserService userService) {
         this.userService = userService;
     }
@@ -56,12 +64,6 @@ public class DashboardScreen extends Screen{
             System.out.println("2) Withdraw founds");
             System.out.println("3) Log out");
 
-
-
-
-
-
-
             try {
                 userSelection = app.getConsole().readLine();
 
@@ -80,8 +82,7 @@ public class DashboardScreen extends Screen{
                         System.out.println("Invalid Selection!");
                 }
             } catch (IOException ioe) {
-                System.err.println("[ERROR] - " + ioe.getMessage());
-                System.out.println("[LOG] - Shutting down application");
+                System.err.println("[ERROR] - " + ioe.getMessage() + ". Shutting down application");
                 app.setAppRunning(false);
                 //TODO maybe get rid of this later
             }

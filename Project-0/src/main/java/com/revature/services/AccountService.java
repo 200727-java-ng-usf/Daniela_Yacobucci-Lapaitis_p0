@@ -16,13 +16,21 @@ public class AccountService {
 
     private AccountRepository accountRepo;
 
-
+    /**
+     * Constructor
+     * @param accountRepo
+     */
     public AccountService(AccountRepository accountRepo){
-        System.out.println("[LOG] - Instantiating " + this.getClass().getName());
+
         this.accountRepo = accountRepo;
     }
 
-
+    /**
+     * Calls multiple methods from the Persistence layer to obtain a HashSet
+     * of the accounts owned by a given user
+     * @param appUser
+     * @return HashSet<Account>
+     */
     public HashSet<Account> getAccountsOfCurrentUsers(AppUser appUser) {
 
         Optional<HashSet<Account>> AccountsByAccountNumber = Optional.empty();
@@ -33,6 +41,11 @@ public class AccountService {
 
     }
 
+    /**
+     * Sets the current user and the current user's accounts to null, therefore logs the user out,
+     * and displays a message to inform the user this this operation has been successful
+     * @return
+     */
     public static boolean logOut (){
 
         app.setCurrentUser(null);
@@ -45,14 +58,20 @@ public class AccountService {
         return false;
     }
 
-
+    /**
+     * Performs basic user input validation with the amount being deposited and
+     * calls persistence layer methods to perform the operation.
+     * @param amount
+     * @param appUser
+     * @return boolean
+     */
     public boolean depositIntoAccount (double amount, AppUser appUser) {
 
         if (isAmountPositive(amount)){
             CheckingAccount temp = getFirstAccountOfUser(appUser);
 
             temp.setBalance(calculateNewBalance(temp, + amount));
-            accountRepo.updateBalanceInDatabase(calculateNewBalance(temp, + amount), temp.getAccountNumber());
+            accountRepo.updateBalanceInDatabase(temp.getBalance(), temp.getAccountNumber());
 
             System.out.println("\nAmount successfully deposited.\n");
             // TODO consider range of variable type
@@ -64,12 +83,24 @@ public class AccountService {
 
     }
 
-
-    public double calculateNewBalance(CheckingAccount temp, double amount){
-        return temp.getBalance() + amount;
+    /**
+     * Convenience method that calculates new balance after a deposit of a withdrawal
+     * @param checkingAccount
+     * @param amount
+     * @return double
+     */
+    public double calculateNewBalance(CheckingAccount checkingAccount, double amount){
+        return checkingAccount.getBalance() + amount;
 
     }
 
+    /**
+     * Performs basic user input validation with the amount being deposited and
+     * calls persistence layer methods to perform the operation.
+     * @param amount
+     * @param appUser
+     * @return boolean
+     */
     public boolean withdrawFromAccount (double amount, AppUser appUser) {
 
         if (isAmountPositive(amount)) {
@@ -78,7 +109,7 @@ public class AccountService {
 
             if (accountHasSufficientFounds(amount, temp.getBalance())) {
                 temp.setBalance(calculateNewBalance(temp, - amount));
-                accountRepo.updateBalanceInDatabase(calculateNewBalance(temp, - amount), temp.getAccountNumber());
+                accountRepo.updateBalanceInDatabase(temp.getBalance(), temp.getAccountNumber());
 
                 System.out.println("\nAmount successfully withdrawn.\n");
                 return true;
@@ -88,6 +119,12 @@ public class AccountService {
 
     }
 
+    /**
+     * Communicates with the persistence layer to obtain the first account of the user
+     * avaibale in the HashSet with all their accounts
+     * @param appUser
+     * @return
+     */
     public CheckingAccount getFirstAccountOfUser(AppUser appUser){
         HashSet<Account> Accounts = new HashSet<Account>();
         Accounts = this.getAccountsOfCurrentUsers(appUser);
@@ -96,6 +133,12 @@ public class AccountService {
 
     }
 
+    /**
+     * Checks for sufficient founds
+     * @param amountToDeposit
+     * @param founds
+     * @return
+     */
     public static boolean accountHasSufficientFounds(double amountToDeposit, double founds){
 
         if(amountToDeposit>founds){
@@ -106,6 +149,11 @@ public class AccountService {
 
     }
 
+    /**
+     * Checks for amount used to deposit or withdrawal being positive
+     * @param amount
+     * @return
+     */
     public static boolean isAmountPositive(double amount){
         if (amount > 0){
             return true;
@@ -114,6 +162,9 @@ public class AccountService {
             return false;
     }
 
+    /**
+     * Sets current user accounts to the set of accounts obtained in getAccountOdCurrentUsers
+     */
     public void updateAccounts () {
         app.setCurrentUserAccounts(getAccountsOfCurrentUsers(app.getCurrentUser()));
 

@@ -3,7 +3,6 @@ package com.revature.models;
 public enum Role {
 
 
-    // values declared within enums are constants and are comma separated
 
     BASIC_USER("Basic User"),
     TELLER("Teller"),
@@ -12,11 +11,16 @@ public enum Role {
 
     private String roleName;
 
-    // enum constructors are implicitly private
+
     Role(String name) {
         this.roleName = name;
     }
 
+    /**
+     * returns the name of the corresponding role in the database
+     * @param name
+     * @return
+     */
     public static Role getByName(String name) {
 
         for (Role role : Role.values()) {
@@ -26,12 +30,6 @@ public enum Role {
         }
 
         return LOCKED;
-
-        // functional implementation of the above code
-//        return Arrays.stream(Role.values())
-//                .filter(role -> role.roleName.equals(name))
-//                .findFirst()
-//                .orElse(LOCKED);
 
     }
 

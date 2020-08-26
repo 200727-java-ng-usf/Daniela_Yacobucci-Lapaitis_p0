@@ -103,7 +103,6 @@ public class AccountServiceTests {
         boolean expectedResult = true;
         boolean actualResult = AccountService.logOut();
         Assert.assertEquals(expectedResult, actualResult);
-        // TODO check system.out
     }
 
     @Test

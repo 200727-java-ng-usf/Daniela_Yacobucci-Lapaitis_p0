@@ -9,10 +9,12 @@ public class ScreenRouter {
 
     private Set<Screen> screens = new HashSet<>();
 
+    /**
+     * Adds all the screens in the Application so that they are avaibale to use
+     * @param screen
+     * @return
+     */
     public ScreenRouter addScreen(Screen screen) {
-        //TODO remove breadcrumb
-        System.out.println("[LOG] - Loading" + screen.getName());
-        // adding screen into HashSet
         screens.add(screen);
         return this;
     }

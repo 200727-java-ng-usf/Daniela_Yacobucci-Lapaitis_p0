@@ -8,6 +8,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static com.revature.AppDriver.app;
+
+
+//TODO add comments to every CLASS as well
+//TODO set appropriate dummy data in database
+
+
 public class ConnectionFactory {
 
     private static ConnectionFactory connFactory = new ConnectionFactory();
@@ -15,6 +22,10 @@ public class ConnectionFactory {
     // A Properties object is created to obtain properties on properties file
     private Properties props = new Properties();
 
+    /**
+     * Singleton Class constructor.
+     * Loeads the properies from the properties file
+     */
     private ConnectionFactory() {
         try {
             // reads relative path of properties file to obtain credentials through FileReader
@@ -22,12 +33,16 @@ public class ConnectionFactory {
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
         } catch (IOException ioe) {
-            ioe.printStackTrace();
-            // TODO change printStackTrace
+            System.err.println("[ERROR] - " + ioe.getMessage() + ". Shutting down application");
+            app.setAppRunning(false);
         }
 
     }
 
+    /**
+     * Static getInstance method needed to follow singleton pattern
+     * @return ConnectionFactory
+     */
     public static ConnectionFactory getInstance() {
         return connFactory;
     }
@@ -61,7 +76,11 @@ public class ConnectionFactory {
 
     }
 
-    // override clone method to guarantee that ConnectionFactory is a singleton
+    /**
+     * Overriden clone method needed to follow Singleton pattern
+     * @return
+     * @throws CloneNotSupportedException
+     */
     @Override
     protected Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();

@@ -17,11 +17,19 @@ import static com.revature.AppDriver.app;
 public class AccountRepository {
 
         public AccountRepository(){
-            System.out.println("[LOG] - Instantiating " + this.getClass().getName());
+
         }
 
 
-        public Optional<HashSet<Integer>> findAccountNumbersByAppUser(AppUser appUser){
+    /**
+     * READ operation
+     * Finds the account numbers of the accounts owned by a centain user and returns them in a HashSet
+     * Used by findAccountsByAccountNumber. Separation needed because the Users and the accounds are
+     * connected with a junction table, and for possible reusability of specific queries.
+     * @param appUser
+     * @return Optional<HashSet<Integer>>
+     */
+    public Optional<HashSet<Integer>> findAccountNumbersByAppUser(AppUser appUser){
 
             Optional<HashSet<Integer>> _AccountNumbers = Optional.empty();
 
@@ -46,6 +54,13 @@ public class AccountRepository {
             return _AccountNumbers;
         }
 
+    /**
+     * READ operation
+     * Finds Accounts given a HashSet of their account numbers
+     * Used by getAccountsOfCurrentUsers on userService
+     * @param accountNumbers
+     * @return Optional<HashSet<Account>>
+     */
     public Optional<HashSet<Account>> findAccountsByAccountNumber(HashSet<Integer> accountNumbers) {
 
         HashSet<Account> Accounts = new HashSet<Account>();
@@ -79,11 +94,18 @@ public class AccountRepository {
 
     }
 
+    /**
+     * UPDATE operation
+     * Updates the balance of the account with the given account number
+     * @param balance
+     * @param accountNumber
+     * @return
+     */
     public Optional<Account> updateBalanceInDatabase(double balance, int accountNumber) {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-            // TODO have to update balance to add
-            // TODO display correct amount
+
+            System.out.println("the balance "+ balance + "the account number " + accountNumber);
 
             String sql = "UPDATE project_0.accounts SET balance = ? WHERE account_number = ?";
 
@@ -103,6 +125,13 @@ public class AccountRepository {
         return null;
     }
 
+    /**
+     * Convenience method to make READ operations more readable
+     * in findAccountsByAccountNumber
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
     private Account mapResultSetOfAccount(ResultSet rs) throws SQLException {
 
         CheckingAccount temp = new CheckingAccount();
@@ -119,7 +148,13 @@ public class AccountRepository {
     }
 
 
-
+    /**
+     * Convenience method to make READ operations more readable
+     * in findAccountNumbersByAppUser
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
     private HashSet<Integer> mapResultSetOfAccountNumbers(ResultSet rs) throws SQLException {
         HashSet<Integer> accountNumbers = new HashSet<>();
 

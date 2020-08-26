@@ -21,6 +21,11 @@ public class DepositScreen extends Screen{
         super("DepositScreen", "/deposit");
     }
 
+    /**
+     * Static getInstance method needed to follow singleton pattern
+     * @param accountService
+     * @return Appropriate Screen implementation
+     */
     public static DepositScreen getInstance(AccountService accountService){
 
         if(depositScreenObj == null){
@@ -31,6 +36,11 @@ public class DepositScreen extends Screen{
         return(depositScreenObj);
     }
 
+    /**
+     * Assignment method needed because it is not possible to place its logic
+     * in the Singleton Constructor
+     * @param accountService
+     */
     public void mapAccountService(AccountService accountService) {
         this.accountService = accountService;
 
@@ -53,8 +63,7 @@ public class DepositScreen extends Screen{
 
         }  catch (IOException e) {
             e.printStackTrace();
-            System.err.println("[ERROR] - An unexpected exception occurred: " + e.getMessage());
-            System.out.println("[LOG] - Shutting down application");
+            System.err.println("[ERROR] - An unexpected exception occurred: " + e.getMessage() + ". Shutting down application.");
             app.setAppRunning(false);
         } catch (NumberFormatException nfe) {
             System.out.println("\nIncorrect input value, you must enter a number.\n");

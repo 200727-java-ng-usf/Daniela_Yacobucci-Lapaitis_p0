@@ -22,10 +22,15 @@ public class UserRepository {
 
 
     public UserRepository() {
-        System.out.println("[LOG] - Instantiating " + this.getClass().getName());
+
     }
 
-
+    /**
+     * READ operation
+     * @param username
+     * @param password
+     * @return Optional<AppUser>
+     */
     public Optional<AppUser> findUserByCredentials(String username, String password) {
 
         Optional<AppUser> _user = Optional.empty();
@@ -49,7 +54,11 @@ public class UserRepository {
         return _user;
     }
 
-
+    /**
+     * READ operation
+     * @param username
+     * @return Optional<AppUser>
+     */
     public Optional<AppUser> findUserByUsername(String username) {
 
         Optional<AppUser> _user = Optional.empty();
@@ -71,6 +80,11 @@ public class UserRepository {
 
     }
 
+    /**
+     * READ operation
+     * @param email
+     * @return Optional<AppUser>
+     */
     public Optional<AppUser> findUserByEmail(String email) {
 
         Optional<AppUser> _user = Optional.empty();
@@ -92,6 +106,12 @@ public class UserRepository {
 
     }
 
+    /**
+     * Convenience method to make READ operations more readable
+     * @param rs
+     * @return Set<AppUser>
+     * @throws SQLException
+     */
     private Set<AppUser> mapResultSet(ResultSet rs) throws SQLException {
 
         Set<AppUser> users = new HashSet<>();
@@ -107,7 +127,6 @@ public class UserRepository {
             temp.setPassword(rs.getString("password"));
             temp.setEmail(rs.getString("email"));
             temp.setRole(Role.getByName(rs.getString("name")));
-            System.out.println(temp);
             users.add(temp);
         }
 
@@ -115,7 +134,10 @@ public class UserRepository {
 
     }
 
-
+    /**
+     * CREATE operation
+     * @param newUser
+     */
     public void save(AppUser newUser) {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {

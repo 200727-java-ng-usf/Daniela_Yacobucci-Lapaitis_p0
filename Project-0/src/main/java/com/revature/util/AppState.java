@@ -13,6 +13,10 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Handles various aspects of the state of the application, such as whether it is running,
+ * and the user that is logged in.
+ */
 public class AppState {
 
     private BufferedReader console;
@@ -27,8 +31,10 @@ public class AppState {
     final UserRepository userRepo = new UserRepository();
     final UserService userService = new UserService(userRepo);
 
+    /**
+     * Class constructor
+     */
     public AppState() {
-        System.out.println("[LOG] - Initializing application...");
 
         appRunning = true;
         console = new BufferedReader(new InputStreamReader(System.in));
@@ -42,10 +48,13 @@ public class AppState {
                 .addScreen(DepositScreen.getInstance(accountService))
                 .addScreen(WithdrawScreen.getInstance(accountService));
 
-        System.out.println("[LOG] - Application initialization complete.");
 
     }
 
+    /**
+     * Getters and Setters
+     * @return
+     */
     public BufferedReader getConsole() {
         return console;
     }
@@ -74,6 +83,10 @@ public class AppState {
         return router;
     }
 
+    /**
+     * Getter of running state
+     * @return
+     */
     public boolean isAppRunning() {
         return appRunning;
     }
