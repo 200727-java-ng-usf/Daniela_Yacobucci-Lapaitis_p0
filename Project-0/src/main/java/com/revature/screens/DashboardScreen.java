@@ -43,16 +43,24 @@ public class DashboardScreen extends Screen{
             String userSelection;
 
             System.out.println("\nWelcome " + app.getCurrentUser().getFirstName() + "!");
-            System.out.println("Please select one of the following options\n");
+
+            System.out.println("\nThe following is your account information");
+            System.out.println(app.getCurrentUser().toString());
+
+            System.out.println("\nThe following are your accounts and their balances");
+            app.getAccountService().updateAccounts();
+            System.out.println(app.getCurrentUserAccounts().toString());
+
+            System.out.println("\nPlease select one of the following options\n");
             System.out.println("1) Deposit founds");
             System.out.println("2) Withdraw founds");
             System.out.println("3) Log out");
 
-            System.out.println("\nThe following are your accounts and their balances");
 
-            app.getAccountService().updateAccounts();
 
-            System.out.println(app.getCurrentUserAccounts().toString());
+
+
+
 
             try {
                 userSelection = app.getConsole().readLine();

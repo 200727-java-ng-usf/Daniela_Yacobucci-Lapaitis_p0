@@ -7,7 +7,7 @@ import java.sql.Connection;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
-public class ConnectionFactoryTest {
+public class ConnectionFactoryTests {
 
     @Test
     public void ensureConnectionFactoryIsSingleton() {

@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public boolean hasMiddleName(String middleName){
-        return (middleName.trim().equals("") ? false : true);
+        return (middleName == null  ? false : true);
     }
 
     public void register(AppUser newUser) {
@@ -56,7 +56,6 @@ public class UserService {
         if (user.getPassword() == null || user.getPassword().trim().equals("")) return false;
         if (user.getEmail() == null || user.getEmail().trim().equals("")) return false;
         return true;
-        // TODO add email validation
     }
 
 
@@ -83,7 +82,4 @@ public class UserService {
 
     }
 
-    public AppUser getUserByUsername(String username) {
-        return null;
-    }
 }

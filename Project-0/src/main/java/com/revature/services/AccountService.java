@@ -33,53 +33,70 @@ public class AccountService {
 
     }
 
-    public static void logOut (){
+    public static boolean logOut (){
+
         app.setCurrentUser(null);
         app.setCurrentUserAccounts(null);
-        System.out.println("\nLogged out successfully\n");
+
+        if(app.getCurrentUser() == null && app.getCurrentUserAccounts() == null){
+            System.out.println("\nLogged out successfully\n");
+            return true;
+        }
+        return false;
     }
 
-    public void depositIntoAccount (double amount, AppUser appUser) {
-        HashSet<Account> Accounts = new HashSet<Account>();
 
+    public boolean depositIntoAccount (double amount, AppUser appUser) {
 
         if (isAmountPositive(amount)){
-            //obtains the first account object of the user
-            Accounts = this.getAccountsOfCurrentUsers(appUser);
-            Iterator itr = Accounts.iterator();
-            CheckingAccount temp = (CheckingAccount) itr.next();
+            CheckingAccount temp = getFirstAccountOfUser(appUser);
 
-            double newBalance = temp.getBalance() + amount;
-            temp.setBalance(newBalance);
-            accountRepo.updateBalanceInDatabase(newBalance, temp.getAccountNumber());
+            temp.setBalance(calculateNewBalance(temp, + amount));
+            accountRepo.updateBalanceInDatabase(calculateNewBalance(temp, + amount), temp.getAccountNumber());
 
             System.out.println("\nAmount successfully deposited.\n");
+            // TODO consider range of variable type
 
+            return true;
             }
 
+        return false;
 
     }
 
-    public void withdrawFromAccount (double amount, AppUser appUser) {
-        HashSet<Account> Accounts = new HashSet<Account>();
 
-        //obtains the first account object of the user
+    public double calculateNewBalance(CheckingAccount temp, double amount){
+        return temp.getBalance() + amount;
+
+    }
+
+    public boolean withdrawFromAccount (double amount, AppUser appUser) {
+
+        if (isAmountPositive(amount)) {
+
+            CheckingAccount temp = getFirstAccountOfUser(appUser);
+
+            if (accountHasSufficientFounds(amount, temp.getBalance())) {
+                temp.setBalance(calculateNewBalance(temp, - amount));
+                accountRepo.updateBalanceInDatabase(calculateNewBalance(temp, - amount), temp.getAccountNumber());
+
+                System.out.println("\nAmount successfully withdrawn.\n");
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public CheckingAccount getFirstAccountOfUser(AppUser appUser){
+        HashSet<Account> Accounts = new HashSet<Account>();
         Accounts = this.getAccountsOfCurrentUsers(appUser);
         Iterator itr = Accounts.iterator();
-        CheckingAccount temp = (CheckingAccount) itr.next();
-
-
-        if (isAmountPositive(amount)&&accountHasSufficientFounds(amount,temp.getBalance())){
-            double newBalance = temp.getBalance() - amount;
-            temp.setBalance(newBalance);
-            accountRepo.updateBalanceInDatabase(newBalance, temp.getAccountNumber());
-
-            System.out.println("\nAmount successfully withdrawn.\n");
-        }
+        return (CheckingAccount) itr.next();
 
     }
 
-    private static boolean accountHasSufficientFounds(double amountToDeposit, double founds){
+    public static boolean accountHasSufficientFounds(double amountToDeposit, double founds){
 
         if(amountToDeposit>founds){
             System.out.println("\nAccount does not have sufficient founds.\n");
@@ -89,7 +106,7 @@ public class AccountService {
 
     }
 
-    private static boolean isAmountPositive(double amount){
+    public static boolean isAmountPositive(double amount){
         if (amount > 0){
             return true;
         }
