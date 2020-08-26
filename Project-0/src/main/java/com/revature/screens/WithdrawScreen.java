@@ -46,7 +46,6 @@ public class WithdrawScreen extends Screen{
     public void render() {
 
         double amount;
-        System.out.println("render method in withdraw screen called");
 
         try {
             System.out.print("Enter amount to withdraw\n" +
