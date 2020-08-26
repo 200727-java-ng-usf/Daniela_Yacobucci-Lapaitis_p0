@@ -43,7 +43,7 @@ public class DepositScreen extends Screen{
         System.out.println("render method in deposit screen called");
 
         try {
-            System.out.println("Enter amount to deposit.\n" +
+            System.out.print("Enter amount to deposit.\n" +
                     ">");
             amount = Double.parseDouble(app.getConsole().readLine());
             System.out.println("Amount entered: " + currencyPrecision.format(amount));

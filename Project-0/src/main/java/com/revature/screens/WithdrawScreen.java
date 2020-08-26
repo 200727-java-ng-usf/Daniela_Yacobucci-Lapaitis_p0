@@ -39,7 +39,7 @@ public class WithdrawScreen extends Screen{
         System.out.println("render method in withdraw screen called");
 
         try {
-            System.out.println("Enter amount to withdraw\n" +
+            System.out.print("Enter amount to withdraw\n" +
                     ">");
             amount = Double.parseDouble(app.getConsole().readLine());
             accountService.withdrawFromAccount(amount, app.getCurrentUser());

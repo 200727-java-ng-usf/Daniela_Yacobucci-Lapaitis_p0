@@ -161,7 +161,7 @@ public class AppUser {
     @Override
     public String toString() {
 
-        String appUserString = "id= " + id + ", firstName = " + firstName;
+        String appUserString = "id = " + id + ", firstName = " + firstName;
 
         if (middleName!=null) {
             appUserString = appUserString + ", middleName = " + middleName;
